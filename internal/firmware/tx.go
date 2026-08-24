@@ -15,12 +15,12 @@ func NewStore() *Store             { return &Store{active: make(map[string]strin
 func (s *Store) SetFail(fail bool) { s.failSet = fail }
 
 func (s *Store) Activate(deviceID, version string) error {
-	s.mu.Lock()
-	s.active[deviceID] = version
-	s.mu.Unlock()
 	if s.failSet {
 		return fmt.Errorf("activation rejected")
 	}
+	s.mu.Lock()
+	s.active[deviceID] = version
+	s.mu.Unlock()
 	return nil
 }
 
