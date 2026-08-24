@@ -18,5 +18,9 @@ func (s *Store) Set(id string, value int) {
 func (s *Store) Snapshot() map[string]int {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
-	return s.values
+	out := make(map[string]int, len(s.values))
+	for id, value := range s.values {
+		out[id] = value
+	}
+	return out
 }
